@@ -28,42 +28,22 @@ class Migration(migrations.Migration):
                 ('Inventory', models.IntegerField(default=0)),
             ],
         ),
-        migrations.RemoveField(
+        # Rename fields in MenuItem from lowercase to uppercase
+        migrations.RenameField(
             model_name='menuitem',
-            name='id',
+            old_name='title',
+            new_name='Title',
         ),
-        migrations.RemoveField(
+        migrations.RenameField(
             model_name='menuitem',
-            name='inventory',
+            old_name='price',
+            new_name='Price',
         ),
-        migrations.RemoveField(
+        migrations.RenameField(
             model_name='menuitem',
-            name='price',
-        ),
-        migrations.RemoveField(
-            model_name='menuitem',
-            name='title',
-        ),
-        migrations.AddField(
-            model_name='menuitem',
-            name='ID',
-            field=models.AutoField(primary_key=True, serialize=False),
-        ),
-        migrations.AddField(
-            model_name='menuitem',
-            name='Inventory',
-            field=models.IntegerField(default=0),
-        ),
-        migrations.AddField(
-            model_name='menuitem',
-            name='Price',
-            field=models.DecimalField(decimal_places=2, default=0, max_digits=10),
-            preserve_default=False,
-        ),
-        migrations.AddField(
-            model_name='menuitem',
-            name='Title',
-            field=models.CharField(default='menu', max_length=255),
-            preserve_default=False,
+            old_name='inventory',
+            new_name='Inventory',
         ),
     ]
+
+
