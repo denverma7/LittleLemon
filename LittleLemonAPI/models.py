@@ -10,6 +10,9 @@ class Menu(models.Model):
     def __str__(self):
         return self.Title
 
+    def __str__(self):
+        return f'{self.title} : {str(self.price)}'
+
 
 class MenuItem(models.Model):
     ID = models.AutoField(primary_key=True)
@@ -18,7 +21,7 @@ class MenuItem(models.Model):
     Inventory = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.Title
+        return f'{self.Title}: {self.Price}'
 
     def get_item(self):
         return f'{self.Title} : {str(self.Price)}'

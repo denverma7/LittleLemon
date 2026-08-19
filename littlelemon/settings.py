@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'restaurant',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'djoser',
     "LittleLemonAPI",
-    "rest_framework.authtoken",
 ]
 
 MIDDLEWARE = [
@@ -99,6 +100,13 @@ DATABASES = {
     }
 }
 
+# Use SQLite for tests to avoid MySQL migration issues
+if 'test' in __import__('sys').argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ':memory:',
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -118,13 +126,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-DEFAULT_AUTHENTICATION_CLASSES = [
-    'rest_framework.authentication.TokenAuthentication',
-    'rest_framework.authentication.SessionAuthentication',
-]
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
 
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('Bearer',),
+}
 
-DJOSER={"USER_ID_FIELD":"username"}
+DJOSER = {
+    "USER_ID_FIELD": "username",
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
