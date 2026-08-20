@@ -21,7 +21,13 @@ class BookingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='user-detail',
+        lookup_field='username',
+        lookup_url_kwarg='username',
+    )
+
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'groups']
