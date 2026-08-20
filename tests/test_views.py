@@ -56,3 +56,16 @@ class MenuItemViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(MenuItem.objects.get(ID=menu_item.ID).Inventory, 2)
+
+
+class UserListViewTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='alice', email='alice@example.com', password='secret')
+        self.client.force_authenticate(user=self.user)
+
+    def test_user_list_endpoint_returns_users(self):
+        response = self.client.get('/api/user/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(any(item['username'] == 'alice' for item in response.data))

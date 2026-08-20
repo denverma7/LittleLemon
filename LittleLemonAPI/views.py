@@ -37,6 +37,8 @@ class BookingViewSet(viewsets.ModelViewSet):
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    lookup_field = 'username'
+    lookup_url_kwarg = 'username'
 
 
 BookingsView = BookingView
